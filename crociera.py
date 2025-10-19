@@ -17,10 +17,11 @@ class Crociera:
     def __str__(self):
         return f"-Nome crociera: {self._nome}"
 
+
+
     def carica_file_dati(self, file_path):
         """Carica i dati (cabine e passeggeri) dal file"""
         # TODO
-
 
         with open(file_path, "r", encoding="utf-8") as openfile:
 
@@ -57,11 +58,15 @@ class Crociera:
                            cab.disponibile=False
                            passeggero.alloggiato=True
                            passeggero.cabina=f'{codice_cabina}'
-                           #DA ULTIMARE
                            return "Cabina assegnata con successo."
                         else:
-                            return 'Cabina o passeggero non disponibili'
-
+                            if cab.disponibile==False and passeggero.alloggiato==True:
+                                return 'Assegnazione non riuscita: passeggero assegnato e cabina non disponibile'
+                            else:
+                                if cab.disponibile == False:
+                                    return 'Assegnazione non riuscita: cabina non disponibile (occupata)'
+                                elif passeggero.alloggiato == True:
+                                    return 'Assegnazione non riuscita: passeggero già assegnsato in una cabina'
 
 
 
@@ -70,6 +75,7 @@ class Crociera:
         # TODO
         cabineOrdinate=sorted(self.listaCabine, key=lambda x: x.prezzo)
         return cabineOrdinate
+
 
     def elenca_passeggeri(self):
         """Stampa l'elenco dei passeggeri mostrando, per ognuno, la cabina a cui è associato, quando applicabile """
@@ -101,7 +107,7 @@ class CabDeluxe(Cabina):
         self.tipologia=tipologia
 
     def __str__(self):
-        return f'-Codice cabina: {self.codCabina}, Numero letti: {self.numLetti}, Ponte: {self.ponte}, Prezzo: {self.prezzo}, Tipologia: {self.tipologia} '
+        return f'-Codice cabina: {self.codCabina} |Cabina Deluxe|, Numero letti: {self.numLetti}, Ponte: {self.ponte}, Prezzo: {self.prezzo}, Tipologia: {self.tipologia} '
 
 
 class CabinaAnimali(Cabina):
@@ -112,7 +118,7 @@ class CabinaAnimali(Cabina):
         self.prezzo=prezzo* (1 + 0.10*numAnimali)
 
     def __str__(self):
-        return f'-Codice cabina: {self.codCabina}, Numero letti: {self.numLetti}, Ponte: {self.ponte}, Prezzo: {self.prezzo}, Numero di animali: {self.numAnimali} '
+        return f'-Codice cabina: {self.codCabina} |Cabina Animali|, Numero letti: {self.numLetti}, Ponte: {self.ponte}, Prezzo: {self.prezzo}€, Numero di animali: {self.numAnimali} '
 
 
 class Passeggero():

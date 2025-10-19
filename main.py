@@ -28,7 +28,7 @@ def main():
             file_path = "dati_crociera.csv"
             try:
                 crociera.carica_file_dati(file_path)
-                print("Dati caricati correttamente.")
+                print("\nDati caricati correttamente.")
 
             except FileNotFoundError:
                 print("File non trovato.")
